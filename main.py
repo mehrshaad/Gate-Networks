@@ -7,35 +7,6 @@ import pyqtgraph as pg
 w1, w2, alpha = 0.0, 0.0, 0.0
 
 
-def Gate():
-    global w1, w2, alpha
-    AND = lambda x, y: int(x and y)
-    NAND = lambda x, y: int(not (x and y))
-    OR = lambda x, y: int(x or y)
-    NOR = lambda x, y: int(not (x or y))
-    XOR = lambda x, y: int(x ^ y)
-    XNOR = lambda x, y: int(not (x ^ y))
-    inputs = [[0, 0], [0, 1], [1, 0], [1, 1]]
-    counter = 0
-    b = 0
-    for i in range(100):
-        if i % 4 == 0:
-            counter = 0
-        x, y = inputs[i % 4]
-        f = 1 if (w1 * x + w2 * y) + b > 0 else 0
-        E = AND(x, y) - f
-        # print(f'{i} : {x}, {y} ,{w1}, {w2}, {f}, {E}, {counter}')
-        if E != 0:
-            w1 = w1 + alpha * x * E
-            w2 = w2 + alpha * y * E
-            counter = 0
-            b = b + alpha * E
-        else:
-            counter += 1
-        if counter == 4:
-            break
-
-
 class Windows:
     def __init__(self):
         self.main = Ui_MainWindow()
@@ -210,9 +181,7 @@ class Ui_func(object):
         self.graphicsView = pg.PlotWidget(self.centralwidget)
         # self.graphicsView = QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName(u"graphicsView")
-        self.graphicsView.mapToScene(10, 10, 10, 10)
         self.graphicsView.setGeometry(QRect(400, 50, 431, 441))
-        self.graphicsView.plot
         self.retranslateUi(func)
         QtCore.QMetaObject.connectSlotsByName(func)
 
@@ -223,6 +192,7 @@ class Ui_func(object):
         self.w1.valueChanged.connect(lambda: self.updateLabel())
         self.w2.valueChanged.connect(lambda: self.updateLabel())
         self.back.clicked.connect(lambda: self.switchWindow())
+        self.submit.clicked.connect(lambda: self.plot())
 
     def retranslateUi(self, func):
         global w1, w2, alpha
@@ -247,6 +217,38 @@ class Ui_func(object):
 
     def switchWindow(self):
         Page.switch_back()
+
+    def plot(self):
+        global w1, w2, alpha
+
+        AND = lambda x, y: int(x and y)
+        NAND = lambda x, y: int(not (x and y))
+        OR = lambda x, y: int(x or y)
+        NOR = lambda x, y: int(not (x or y))
+        XOR = lambda x, y: int(x ^ y)
+        XNOR = lambda x, y: int(not (x ^ y))
+        inputs = [[0, 0], [0, 1], [1, 0], [1, 1]]
+        counter = 0
+        b = 0
+        for i in range(400):
+            
+            if i % 4 == 0:
+                counter = 0
+            x, y = inputs[i % 4]
+            f = 1 if (w1 * x + w2 * y) + b > 0 else 0
+            E = AND(x, y) - f
+            if E != 0:
+                w1 = w1 + alpha * x * E
+                w2 = w2 + alpha * y * E
+                counter = 0
+                b = b + alpha * E
+            else:
+                counter += 1
+            if counter == 4:
+                break
+        self.graphicsView.plot([x for x in [-0.5,0,0.5,1,1.5]],[(-w1 * x - b) / w2 for x in [-0.5,0,0.5,1,1.5]])
+        self.graphicsView.mapToScene(10, 10, 10, 10)
+        
 
 
 app = QtWidgets.QApplication(sys.argv)
