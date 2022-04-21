@@ -107,7 +107,6 @@ class Ui_MainWindow(object):
         global OPR
         OPR = text
         Page.switch_window()
-        print(text)
 
 
 class Ui_func(object):
@@ -182,7 +181,6 @@ class Ui_func(object):
         self.statusbar.setObjectName("statusbar")
         func.setStatusBar(self.statusbar)
         self.graphicsView = pg.PlotWidget(self.centralwidget)
-        # self.graphicsView = QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName(u"graphicsView")
         self.graphicsView.setGeometry(QRect(400, 50, 431, 441))
         self.retranslateUi(func)
@@ -195,7 +193,7 @@ class Ui_func(object):
         self.w1.valueChanged.connect(lambda: self.updateLabel())
         self.w2.valueChanged.connect(lambda: self.updateLabel())
         self.back.clicked.connect(lambda: self.switchWindow())
-        self.submit.clicked.connect(lambda: self.plot(w1, w2, alpha))
+        self.submit.clicked.connect(lambda: self.plot())
 
     def retranslateUi(self, func):
         global w1, w2, alpha
@@ -221,28 +219,45 @@ class Ui_func(object):
     def switchWindow(self):
         Page.switch_back()
 
-    def plot(self, w1, w2, alpha):
+    def plot(self):
+        global OPR, w1, w2, alpha
         self.graphicsView.clear()
-        global OPR
-        def AND(x, y): return int(x and y)
-        def NAND(x, y): return int(not (x and y))
-        def OR(x, y): return int(x or y)
-        def NOR(x, y): return int(not (x or y))
-        def XOR(x, y): return int(x ^ y)
+
+        def AND(x, y):
+            return int(x and y)
+
+        def NAND(x, y):
+            return int(not (x and y))
+
+        def OR(x, y):
+            return int(x or y)
+
+        def NOR(x, y):
+            return int(not (x or y))
+
+        def XOR(x, y):
+            return int(x ^ y)
+
         inputs = [[0, 0], [0, 1], [1, 0], [1, 1]]
-        def XNOR(x, y): return int(not (x ^ y))
+
+        def XNOR(x, y):
+            return int(not (x ^ y))
+
         counter = 0
         b = 0
 
         for i in inputs:
             if eval(OPR)(i[0], i[1]):
-                self.graphicsView.plot(
-                    [i[0]], [i[1]], pen=None, symbolBrush=(255, 255, 255), symbol='o')
+                self.graphicsView.plot([i[0]], [i[1]],
+                                       pen=None,
+                                       symbolBrush=(255, 255, 255),
+                                       symbol='o')
             else:
-                self.graphicsView.plot(
-                    [i[0]], [i[1]], pen=None, symbolBrush=(0, 0, 0), symbol='o')
+                self.graphicsView.plot([i[0]], [i[1]],
+                                       pen=None,
+                                       symbolBrush=(0, 0, 0),
+                                       symbol='o')
         for i in range(50):
-
             if i % 4 == 0:
                 counter = 0
             x, y = inputs[i % 4]
@@ -257,11 +272,15 @@ class Ui_func(object):
                 counter += 1
             if counter == 4:
                 break
-            p1 = self.graphicsView.plot(
-                [x for x in [-0.2, 1.2]], [(-w1 * x - b) / w2 for x in [-0.2, 1.2]], pen=(100+3*i, 0, 0))
+            p1 = self.graphicsView.plot([x for x in [-0.2, 1.2]],
+                                        [(-w1 * x - b) / w2
+                                         for x in [-0.2, 1.2]],
+                                        pen=(100 + 3 * i, 0, 0))
         if counter == 4:
-            p1 = self.graphicsView.plot(
-                [x for x in [-0.2, 1.2]], [(-w1 * x - b) / w2 for x in [-0.2, 1.2]], pen=(0, 200, 0))
+            p1 = self.graphicsView.plot([x for x in [-0.2, 1.2]],
+                                        [(-w1 * x - b) / w2
+                                         for x in [-0.2, 1.2]],
+                                        pen=(0, 200, 0))
         # print(f'{i} : {x}, {y} ,{w1}, {w2}, {f}, {E}, {counter}')
 
         self.graphicsView.mapToScene(10, 10, 10, 10)
