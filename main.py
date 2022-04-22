@@ -1,4 +1,5 @@
 import sys
+import subprocess
 try:
     from PyQt5 import QtCore, QtGui, QtWidgets
 except ImportError:
@@ -7,7 +8,6 @@ finally:
     from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-import subprocess
 try:
     import pyqtgraph as pg
 except ImportError:
@@ -110,7 +110,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Gate Networks"))
         self.label.setText(
             _translate("MainWindow", "WELCOME TO GATE NETWORKS!!!"))
         self.NOR.setText(_translate("MainWindow", "NOR"))
@@ -217,7 +217,7 @@ class Ui_func(object):
     def retranslateUi(self, func):
         global w1, w2, alpha
         _translate = QtCore.QCoreApplication.translate
-        func.setWindowTitle(_translate("func", "MainWindow"))
+        func.setWindowTitle(_translate("func", "Gate Networks"))
         self.label.setText(_translate("func", "Enter Variables"))
         self.label_4.setText(_translate("func", f"W2: {w2}"))
         self.label_2.setText(_translate("func", f"Alpha: {alpha}"))
