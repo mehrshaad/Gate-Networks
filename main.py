@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 50, 831, 271))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 30, 831, 271))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(10, 0, 10, 0)
@@ -76,6 +76,10 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 850, 28))
+        self.label_2 = QLabel(self.centralwidget)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(10, 243, 831, 81))
+        self.label_2.setAlignment(Qt.AlignCenter)
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -102,6 +106,7 @@ class Ui_MainWindow(object):
         self.XOR.setText(_translate("MainWindow", "XOR"))
         self.NAND.setText(_translate("MainWindow", "NAND"))
         self.XNOR.setText(_translate("MainWindow", "XNOR"))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Ali Dadashzadeh - Kiyan Rezaei - Vahid Aghilzadeh", None))
 
     def switchWindow(self, text):
         global OPR
