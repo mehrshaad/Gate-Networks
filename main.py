@@ -1,8 +1,22 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+try:
+    from PyQt5 import QtCore, QtGui, QtWidgets
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'PyQt5'])
+finally:
+    from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import pyqtgraph as pg
+import subprocess
+try:
+    import pyqtgraph as pg
+except ImportError:
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", 'pyqtgraph'])
+finally:
+    import pyqtgraph as pg
+
 
 w1, w2, alpha = 0.0, 0.0, 0.0
 OPR = ""
@@ -106,7 +120,8 @@ class Ui_MainWindow(object):
         self.XOR.setText(_translate("MainWindow", "XOR"))
         self.NAND.setText(_translate("MainWindow", "NAND"))
         self.XNOR.setText(_translate("MainWindow", "XNOR"))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Ali Dadashzadeh - Kiyan Rezaei - Vahid Aghilzadeh", None))
+        self.label_2.setText(QCoreApplication.translate(
+            "MainWindow", u"Ali Dadashzadeh - Kiyan Rezaei - Vahid Aghilzadeh", None))
 
     def switchWindow(self, text):
         global OPR
