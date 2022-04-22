@@ -7,7 +7,6 @@ finally:
     from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-import pyqtgraph as pg
 import subprocess
 try:
     import pyqtgraph as pg
